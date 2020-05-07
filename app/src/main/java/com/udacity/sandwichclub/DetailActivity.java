@@ -1,10 +1,14 @@
 package com.udacity.sandwichclub;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
         Sandwich sandwich = JsonUtils.parseSandwichJson(json);
-        Log.d("DetailActivity", "Sandwich: " + sandwich);
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
@@ -76,9 +79,20 @@ public class DetailActivity extends AppCompatActivity {
 
         List<String> alsoKnownList = sandwich.getAlsoKnownAs();
         if (alsoKnownList.size() > 0) {
+            String alsoKnownListString = convertToString(alsoKnownList);
             textView = findViewById(R.id.also_known_tv);
-            textView.setText(convertToString(alsoKnownList));
-            findViewById(R.id.also_known_ll).setVisibility(View.VISIBLE);
+            textView.setText(alsoKnownListString);
+            TextView labelTextView = findViewById(R.id.also_known_label_tv);
+            LinearLayout linearLayout = findViewById(R.id.also_known_ll);
+
+            // If alsoKnown list is too big to fit the screen, display it in the next line
+            int textWidth = getTextWidth(alsoKnownListString, textView) +
+                    getTextWidth(getString(R.string.detail_also_known_as_label), labelTextView);
+            if (textWidth >= getDisplayWidth()) {
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                setPaddingInDPs(textView, 16, 0, 16, 0);
+            }
+            linearLayout.setVisibility(View.VISIBLE);
         }
 
         textView = findViewById(R.id.description_tv);
@@ -98,5 +112,28 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
         return builder.toString();
+    }
+
+    private int getTextWidth(String text, TextView tv) {
+        Rect bounds = new Rect();
+        Paint textPaint = tv.getPaint();
+        textPaint.getTextBounds(text, 0, text.length(), bounds);
+        return bounds.width();
+    }
+
+    private int getDisplayWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
+
+    private void setPaddingInDPs(View view, int left, int top, int right, int bottom) {
+        float scale = getResources().getDisplayMetrics().density;
+        int leftDP = (int) (left * scale + 0.5f);
+        int topDP = (int) (top * scale + 0.5f);
+        int rightDP = (int) (right * scale + 0.5f);
+        int bottomDP = (int) (bottom * scale + 0.5f);
+        view.setPadding(leftDP, topDP, rightDP, bottomDP);
     }
 }

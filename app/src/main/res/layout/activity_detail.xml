@@ -32,8 +32,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:textColor="@color/colorAccent"
                 android:textAllCaps="true"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="Sandwich name" />
 
@@ -43,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
                 android:visibility="invisible"
                 tools:text="Russia" />
         </LinearLayout>
@@ -56,19 +58,22 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/also_known_label_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/detail_also_known_as_label"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/also_known_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
                 android:paddingLeft="8dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text="Sandy, Arny, Quebeck" />
         </LinearLayout>
 
@@ -77,26 +82,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:paddingRight="16dp"
-            android:textSize="22sp"
+            android:textSize="20sp"
             tools:text="A ham and cheese sandwich is a common type of sandwich. It is made by puttin cheese and sliced ham between two slices of bread. The bread is sometimes buttered and/or toasted. Vegetables like lettuce, tomato, onion or pickle slices can also be included. Various kinds of mustard and mayonnaise are also common." />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
+            android:textColor="@color/colorAccent"
             android:text="@string/detail_ingredients_label"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ingredients_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="4dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:textSize="18sp"
             tools:text="Slicedbread, Cheese, Ham" />
 
     </LinearLayout>
