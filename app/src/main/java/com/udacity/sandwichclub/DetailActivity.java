@@ -30,6 +30,9 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+
         ImageView ingredientsIv = findViewById(R.id.image_iv);
 
         Intent intent = getIntent();
