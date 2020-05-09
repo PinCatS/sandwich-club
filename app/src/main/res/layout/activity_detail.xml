@@ -19,19 +19,18 @@
             android:scaleType="centerCrop"
             tools:background="@tools:sample/backgrounds/scenic" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:paddingLeft="@dimen/activity_left_padding"
             android:paddingTop="16dp"
             android:paddingRight="@dimen/activity_right_padding">
 
             <TextView
                 android:id="@+id/sandwich_name_tv"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_alignParentLeft="true"
                 android:textColor="@color/colorAccent"
                 android:textAllCaps="true"
                 android:textSize="@dimen/heading_text_size"
@@ -40,15 +39,15 @@
 
             <TextView
                 android:id="@+id/origin_tv"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
+                android:layout_alignBottom="@+id/sandwich_name_tv"
+                android:layout_alignParentRight="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/normal_text_size"
                 android:visibility="invisible"
                 tools:text="Russia" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/also_known_ll"
