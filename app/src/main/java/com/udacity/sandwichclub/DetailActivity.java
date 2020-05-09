@@ -70,9 +70,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
+        // populate sandwich main name
         TextView textView = findViewById(R.id.sandwich_name_tv);
         textView.setText(sandwich.getMainName());
 
+        // populate sandwich origin if presents
         String origin = sandwich.getPlaceOfOrigin();
         if (!origin.equals("")) {
             textView = findViewById(R.id.origin_tv);
@@ -80,6 +82,7 @@ public class DetailActivity extends AppCompatActivity {
             textView.setVisibility(View.VISIBLE);
         }
 
+        // populate "also known as" list if presents
         List<String> alsoKnownList = sandwich.getAlsoKnownAs();
         if (alsoKnownList.size() > 0) {
             String alsoKnownListString = convertToString(alsoKnownList);
@@ -88,9 +91,8 @@ public class DetailActivity extends AppCompatActivity {
             TextView labelTextView = findViewById(R.id.also_known_label_tv);
             LinearLayout linearLayout = findViewById(R.id.also_known_ll);
 
-            // If alsoKnown list is too big to fit the screen, display it in the next line
-            int textWidth = getTextWidth(alsoKnownListString, textView) +
-                    getTextWidth(getString(R.string.detail_also_known_as_label), labelTextView);
+            // if alsoKnown list is too big to fit the screen, display it in the next line
+            int textWidth = getTextWidth(textView) + getTextWidth(labelTextView);
             if (textWidth >= getDisplayWidth()) {
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 setPaddingInDPs(textView, 16, 0, 16, 0);
@@ -98,13 +100,21 @@ public class DetailActivity extends AppCompatActivity {
             linearLayout.setVisibility(View.VISIBLE);
         }
 
+        // populate the description
         textView = findViewById(R.id.description_tv);
         textView.setText(sandwich.getDescription());
 
+        // populate the ingredients
         textView = findViewById(R.id.ingredients_tv);
         textView.setText(convertToString(sandwich.getIngredients()));
     }
 
+    /**
+     * Converts list of items to the string of items separated by comma.
+     *
+     * @param list The List of items to convert
+     * @return The string in a form "item, item, item"...
+     */
     private String convertToString(List<String> list) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
@@ -117,13 +127,25 @@ public class DetailActivity extends AppCompatActivity {
         return builder.toString();
     }
 
-    private int getTextWidth(String text, TextView tv) {
+    /**
+     * Calculates the width of the text in a text view.
+     *
+     * @param tv The text view where a text is populated
+     * @return the width in pixels of the text in a text view
+     */
+    private int getTextWidth(TextView tv) {
+        String text = tv.getText().toString();
         Rect bounds = new Rect();
         Paint textPaint = tv.getPaint();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
         return bounds.width();
     }
 
+    /**
+     * Calculates the display width.
+     *
+     * @return the width in pixels of the display
+     */
     private int getDisplayWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -131,6 +153,15 @@ public class DetailActivity extends AppCompatActivity {
         return size.x;
     }
 
+    /**
+     * Set paddings to the view in DP units.
+     *
+     * @param view   The view for which paddings should be set
+     * @param left   The left padding in DP units
+     * @param top    The top padding in DP units
+     * @param right  The right padding in DP units
+     * @param bottom The bottom padding in DP units
+     */
     private void setPaddingInDPs(View view, int left, int top, int right, int bottom) {
         float scale = getResources().getDisplayMetrics().density;
         int leftDP = (int) (left * scale + 0.5f);
